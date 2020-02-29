@@ -16,7 +16,7 @@ Famenun CLI let's you manage your famenun apps and take common actions on them. 
 
 ### Installation
 
-Dillinger requires [Node.js](https://nodejs.org/) v4+ to run.
+Famenun CLI requires [Node.js](https://nodejs.org/) v4+ to run.
 
 Just get your hand on Famenun-CLI from NPM using following command
 
@@ -60,6 +60,11 @@ play with repo and let us know
  - Write Tests
  - Better code
  - Add more functionality realted to project management
+
+### Important Resources
+
+ - [Famenun For Developers](https://developers.famenun.com/)
+ - [Famenun App Docs](https://developers.famenun.com/docs)
 
 License
 ----
