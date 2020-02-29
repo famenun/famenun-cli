@@ -1,0 +1,37 @@
+create
+serve
+publish
+
+login
+list
+
+logout
+
+TODO: 
+    => logic for testing the project
+
+f.app.json = {
+    scripts: [
+
+    ]
+}
+
+__f_post__
+    => this is the context of the post
+
+        __f_post__.data.property
+        __f_post__.elements.element.value
+
+
+__f_app__
+    => this is the context of your app
+
+        __f_app__.runScript("script_name", {"data", "value"});
+
+
+__famenun__
+    => this is the context of the app
+
+        __famenun__.request()
+        __famenun__.user.name
+        __famenun__.database
