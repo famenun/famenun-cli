@@ -8,27 +8,6 @@ import Listr from "listr";
 
 import JSZip from "jszip";
 
-import { exec } from "child_process";
-import { ServerHandler } from "./ServerHandler";
-
-const installSDK = (): Promise<void> => {
-    return new Promise(async (resolve, reject) => {
-        exec("npm init -y", (error, stdout, stderr) => {
-            if (!error) {
-                exec("npm i @famenun/sdk", (error, stdout, stderr) => {
-                    if (!error) {
-                        resolve();
-                    } else {
-                        reject(stderr);
-                    }
-                });
-            } else {
-                reject(stderr);
-            }
-        });
-    });
-}
-
 const createManifest = (options: any): Promise<void> => {
     return new Promise(async (resolve, reject) => {
         const manifest = {
@@ -36,9 +15,7 @@ const createManifest = (options: any): Promise<void> => {
             id: options.data.id,
             name: options.data.name,
             color: options.data.color,
-            entry: "index.html",
-            permissions: [],
-            handlers: []
+            entry: "./index.html"
         };
         const manifestFile = path.resolve(process.cwd(), "f.app.json");
         fs.writeFile(manifestFile, JSON.stringify(manifest), (err) => {
@@ -89,28 +66,6 @@ const createFAP = (dir?: string): Promise<void> => {
     });
 }
 
-const upload = (file: string): Promise<void> => {
-    return new Promise(async (resolve, reject) => {
-        const serverHandler: ServerHandler = new ServerHandler({
-            onCallback(body: any): void {
-                console.log("body : " + body);
-                serverHandler.stop();
-                resolve();
-            },
-            onError(error: string): void {
-                serverHandler.stop();
-                reject(error);
-            },
-            onServerStarted(): void {
-                serverHandler.execute(`http://localhost:4200/firebase?action=upload&file=${file}`);
-            },
-            onServerStopped(): void {
-                //
-            }
-        });
-    });
-}
-
 export const createProject = (options: any): Promise<boolean> => {
     return new Promise(async (resolve, reject) => {
         clear();
@@ -130,17 +85,9 @@ export const createProject = (options: any): Promise<boolean> => {
                 task: () => copyTemplateFiles(options),
             },
             {
-                title: "Create manifest.json",
+                title: "Create f.app.json",
                 task: () => createManifest(options),
-            },
-            {
-                title: "Install dependencies",
-                task: () => installSDK(),
-                skip: () =>
-                    !options.runInstall
-                        ? "Pass --install to automatically install dependencies"
-                        : undefined,
-            },
+            }
         ]);
         await tasks.run();
         resolve(true);
@@ -165,23 +112,6 @@ export const buildProject = (path?: string): Promise<void> => {
         } catch (error) {
             reject(error);
         }
-    });
-}
-
-export const publishProject = (): Promise<void> => {
-    return new Promise(async (resolve, reject) => {
-        const tasks = new Listr([
-            {
-                title: "Upload App",
-                task: () => upload("C:\\Program Files\\NodeProjects\\famenun\\sdk\\app.zip")
-            }
-        ]);
-        tasks.run()
-            .then(() => {
-                resolve();
-            }).catch((error) => {
-                reject(error);
-            });
     });
 }
 

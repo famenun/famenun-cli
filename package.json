@@ -1,6 +1,6 @@
 {
     "name": "@famenun/cli",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "Official Famenun CLI for Famenun Apps management",
     "main": "lib/index.js",
     "bin": {
@@ -19,13 +19,9 @@
     "license": "ISC",
     "files": [
         "lib/",
-        "templates/"
+        "template/"
     ],
     "dependencies": {
-        "@famenun/sdk": "^1.2.4",
-        "@types/inquirer": "^6.5.0",
-        "@types/listr": "^0.14.2",
-        "@types/ncp": "^2.0.2",
         "arg": "^4.1.1",
         "chalk": "^2.4.2",
         "clear": "^0.1.0",
@@ -41,6 +37,9 @@
         "table": "^5.4.6"
     },
     "devDependencies": {
+        "@types/inquirer": "^6.5.0",
+        "@types/listr": "^0.14.2",
+        "@types/ncp": "^2.0.2",
         "@types/body-parser": "^1.19.0",
         "@types/clear": "^0.1.0",
         "@types/express": "^4.17.2",

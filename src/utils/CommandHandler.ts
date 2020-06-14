@@ -4,29 +4,17 @@ import chalk from "chalk";
 import fs from "fs";
 import path from "path";
 import { table } from "table";
+import { createProject, buildProject, isDirectoryFamenunProject } from "./ProjectHandler";
 
-import { AuthHandler } from "./AuthHandler";
-import { createProject, buildProject, publishProject } from "./ProjectHandler";
-
-const COMMAND_LOGIN = "login";
-const COMMAND_LOGOUT = "logout";
 const COMMAND_CREATE = "create";
 const COMMAND_BUILD = "build";
-const COMMAND_EMULATE = "emulate";
-const COMMAND_PUBLISH = "publish";
 const COMMAND_HELP = "help";
-const COMMAND_ABOUT = "about";
-const COMMAND_VERSION = "version";
-
-const VERSION = "1.0.7";
 
 const parseArgumentsIntoOptions = (rawArgs: any): any => {
     const args = arg({
         "--yes": Boolean,
-        "--install": Boolean,
         "--help": Boolean,
         "-y": "--yes",
-        "-i": "--install",
         "-h": "--help",
     }, {
         argv: rawArgs.slice(2),
@@ -35,45 +23,36 @@ const parseArgumentsIntoOptions = (rawArgs: any): any => {
         command: args._[0],
         name: args._[1],
         skipPrompts: args["--yes"] || false,
-        runInstall: args["--install"] || false,
         help: args["--help"] || false,
     };
 }
 
 const promptForMissingOptions = (options: any): Promise<any> => {
     return new Promise(async (resolve, reject) => {
-
-        const manifestFile = path.resolve(process.cwd(), "f.app.json");
-
-        if (fs.existsSync(manifestFile)) {
-            console.log(chalk.bgRed.bold("ERROR") + chalk.yellow(` This is already a project directory !`));
-        } else {
+        if(!isDirectoryFamenunProject()){
             const defaultId = "com.example.app";
             const defaultName = path.basename(path.resolve(process.cwd()));
+            const defaultColor = "#1df2a1";
             if (options.skipPrompts) {
                 resolve({
                     ...options,
                     name: options.name,
                     runInstall: options.runInstall || false,
                     data: {
+                        id: defaultId,
                         name: defaultName,
-                        about: "",
-                        tags: "",
+                        color: defaultColor
                     },
                 });
             } else {
-                const questions = [];
-                if (!options.runInstall) {
-                    questions.push({
-                        type: "confirm",
-                        name: "runInstall",
-                        message: "Install helpful dependencies?",
-                        default: false,
-                    });
-                }
-                const answers = await inquirer.prompt(questions);
-
                 const projectQuestions = [];
+
+                projectQuestions.push({
+                    type: "input",
+                    name: "id",
+                    message: `Id of the project (Ex. com.example.app) :"`,
+                    default: defaultId,
+                });
 
                 if (options.name === undefined) {
                     projectQuestions.push({
@@ -86,23 +65,15 @@ const promptForMissingOptions = (options: any): Promise<any> => {
 
                 projectQuestions.push({
                     type: "input",
-                    name: "id",
-                    message: `Id of the project (Ex. com.example.app) :"`,
-                    default: defaultId,
-                });
-
-                projectQuestions.push({
-                    type: "input",
                     name: "color",
                     message: "Theme color (Ex. #1df2a1) :",
-                    default: "#1df2a1",
+                    default: defaultColor,
                 });
 
                 const projectAnswers = await inquirer.prompt(projectQuestions);
 
                 resolve({
                     ...options,
-                    runInstall: options.runInstall || answers.runInstall,
                     data: {
                         id: projectAnswers.id || defaultId,
                         name: options.name || projectAnswers.name || defaultName,
@@ -110,7 +81,10 @@ const promptForMissingOptions = (options: any): Promise<any> => {
                     },
                 });
             }
+        }else{
+            console.log(chalk.bgRed.bold("ERROR") + chalk.yellow(` This is already a project directory !`));
         }
+        
     });
 }
 
@@ -119,10 +93,8 @@ const showHelpTable = (): void => {
     console.log(chalk.yellow.bold("@famenun/cli supports the follwoing commands : "));
     console.log("");
     const output = table([
-        ["login", "Authorise and create new session", ""],
-        ["logout", "Destroy ongoing session", ""],
         ["create", "Create new project", "Expects one optional argument i.e. project name"],
-        ["publish", "Publish app in current directory", ""],
+        ["build", "Build Famenun App Package (.fap) file ", "Expects one optional argument i.e. project directory"],
         ["help", "All Available commands", ""],
         ["-y or --yes", "Create project with default values", ""],
         ["-i or --install", "Install SDK by default", ""],
@@ -154,39 +126,13 @@ export const handle = (args: any) => {
             showHelpTable();
         }
         switch (options.command.toLowerCase()) {
-            case COMMAND_LOGIN:
-                if (options.help) {
-                    console.log(
-                        chalk.bgYellow.bold("HELP") +
-                        chalk.yellow(` With '${options.command}' you can log into your famenun account and verify your session`));
-                } else {
-                    new AuthHandler()
-                        .login()
-                        .then(() => {
-                            console.log(chalk.bgGreen.bold("SUCCESS") + chalk.green(" Signed in successfully :)"));
-                        }).catch((error) => {
-                            console.log(chalk.bgRed.bold("ERROR") + chalk.yellow(" " + error));
-                        });
-                }
-                break;
-            case COMMAND_LOGOUT:
-                if (options.help) {
-                    console.log(
-                        chalk.bgYellow.bold("HELP") +
-                        chalk.yellow(` With '${options.command}' you can destroy your current famenun account session`));
-                } else {
-                    console.log("logout kr bnde ko");
-                }
-                break;
             case COMMAND_CREATE:
                 if (options.help) {
                     console.log(
                         chalk.bgYellow.bold("HELP") +
                         chalk.yellow(` With '${options.command}' you can create new famenun app template in the current directory`));
                 } else {
-
-                    const manifestFile = path.resolve(process.cwd(), "f.app.json");
-                    if (!fs.existsSync(manifestFile)) {
+                    if(!isDirectoryFamenunProject()){
                         try {
                             options = await promptForMissingOptions(options);
                             await createProject(options);
@@ -196,10 +142,9 @@ export const handle = (args: any) => {
                         } catch (error) {
                             console.log(chalk.bgRed.bold("ERROR") + chalk.yellow(error));
                         }
-                    } else {
+                    }else{
                         console.log(chalk.bgRed.bold("ERROR") + chalk.yellow("Current directory already contains a Famenun App"));
                     }
-
                 }
                 break;
             case COMMAND_BUILD:
@@ -211,23 +156,8 @@ export const handle = (args: any) => {
                     await buildProject(process.argv[3]);
                 }
                 break;
-            case COMMAND_PUBLISH:
-                if (options.help) {
-                    console.log(
-                        chalk.bgYellow.bold("HELP") +
-                        chalk.yellow(` With '${options.command}' you can publish your famenun app in current directory. This command should be executed in the directory where the f.app.json file lies`));
-                } else {
-                    await publishProject();
-                }
-                break;
             case COMMAND_HELP:
                 showHelpTable();
-                break;
-            case COMMAND_ABOUT:
-                console.log(`Famenun apps template creation utility i.e. @famenun/cli@${VERSION}`);
-                break;
-            case COMMAND_VERSION:
-                console.log(`v${VERSION}`);
                 break;
             default:
                 console.log(chalk.bgRed.bold("ERROR") + chalk.yellow(` Unknown command '${options.command}'`));
