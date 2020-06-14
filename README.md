@@ -12,7 +12,7 @@ Famenun CLI let's you manage your famenun apps and take common actions on them. 
   - Now you can create a simple app template
   - Some bugs removed
 
-![Image of Yaktocat](https://firebasestorage.googleapis.com/v0/b/famenun-2943.appspot.com/o/common%2Fimageedit_3_9142314958.png?alt=media&token=1d0a80c8-51bb-4256-a56f-6c2811435b1a)
+![Image of Famenun Project Creation](https://firebasestorage.googleapis.com/v0/b/famenun-2943.appspot.com/o/common%2Fcreate.png?alt=media&token=149c202e-3768-4ac3-af23-ea3b509f51b4)
 
 ### Installation
 
@@ -36,10 +36,8 @@ For now Famenun-CLI supports the following commands and we have plans to cover m
 
 | Command | Usuage | Params | Flags |
 | ------ | ------ | ------ | ------ |
-| login | Start a new session | | -h or --help|
-| logout | Destroy current session | | -h or --help |
 | create | Start a new project | OPTIONAL: app name |-y or --yes and -h or --help |
-| publish | Publish app in current directory | | -h or --help |
+| build | Build .fap file | OPTIONAL: project path | -h or --help |
 | help | Prints all supported commands | | -h or --help |
 
 | Flag | Usuage |
@@ -47,7 +45,7 @@ For now Famenun-CLI supports the following commands and we have plans to cover m
 | -h or --help | Print the usuage of the command |
 | -y or --yes | Skip basic questionaire while creating project | 
 
-![Image of Famenun CLI Commands](https://firebasestorage.googleapis.com/v0/b/famenun-2943.appspot.com/o/common%2Fimageedit_1_8783334224.png?alt=media&token=2e756664-4dad-480f-b34f-16ee866be7ba)
+![Image of Famenun CLI Commands](https://firebasestorage.googleapis.com/v0/b/famenun-2943.appspot.com/o/common%2Fhelp.png?alt=media&token=4ae0a2fd-8df1-4b8a-8631-a9a672098598)
 
 ### Development
 

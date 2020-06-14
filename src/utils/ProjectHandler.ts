@@ -7,6 +7,7 @@ import figlet from "figlet";
 import Listr from "listr";
 
 import JSZip from "jszip";
+import { getFilesRecursively } from "./FilesHandler";
 
 const createManifest = (options: any): Promise<void> => {
     return new Promise(async (resolve, reject) => {
@@ -46,17 +47,21 @@ const createFAP = (dir?: string): Promise<void> => {
     return new Promise(async (resolve, reject) => {
         try {
             const zip = new JSZip();
-            const files = fs.readdirSync(dir || process.cwd());
+            const projectPath = dir !== undefined ? path.resolve(process.cwd(), dir) : process.cwd();
+            console.log(projectPath);
+            const files: string[] = getFilesRecursively(projectPath);
+            console.log(JSON.stringify(files));
             for (const file of files) {
-                zip.file(file);
+                const filePath = file.split(projectPath)[1];
+                zip.file(filePath, fs.createReadStream(file));
             }
-            const appFilePath = path.resolve(dir || process.cwd(), 'app.fap');
+            const fapFilePath = path.resolve(projectPath, 'app.fap');
             zip
                 .generateNodeStream({ type: 'nodebuffer', streamFiles: true }, (metadata: any) => {
                     let rawProg: number = metadata.percent || 0;
                     const progress = rawProg.toFixed(2);
                 })
-                .pipe(fs.createWriteStream(appFilePath))
+                .pipe(fs.createWriteStream(fapFilePath))
                 .on('finish', () => {
                     resolve();
                 });
@@ -66,31 +71,35 @@ const createFAP = (dir?: string): Promise<void> => {
     });
 }
 
-export const createProject = (options: any): Promise<boolean> => {
+export const createProject = (options: any): Promise<void> => {
     return new Promise(async (resolve, reject) => {
-        clear();
-        console.log(
-            chalk.yellow(
-                figlet.textSync("Famenun", { horizontalLayout: "full" })
-            )
-        );
-        options = {
-            ...options,
-            targetDirectory: options.targetDirectory || process.cwd(),
-            templateDirectory: path.resolve(__dirname, "../../template"),
-        };
-        const tasks = new Listr([
-            {
-                title: "Copy project template files",
-                task: () => copyTemplateFiles(options),
-            },
-            {
-                title: "Create f.app.json",
-                task: () => createManifest(options),
-            }
-        ]);
-        await tasks.run();
-        resolve(true);
+        try {
+            clear();
+            console.log(
+                chalk.yellow(
+                    figlet.textSync("Famenun", { horizontalLayout: "full" })
+                )
+            );
+            options = {
+                ...options,
+                targetDirectory: options.targetDirectory || process.cwd(),
+                templateDirectory: path.resolve(__dirname, "../../template"),
+            };
+            const tasks = new Listr([
+                {
+                    title: "Copy project template files",
+                    task: () => copyTemplateFiles(options),
+                },
+                {
+                    title: "Create f.app.json",
+                    task: () => createManifest(options),
+                }
+            ]);
+            await tasks.run();
+            resolve();
+        }catch(error){
+            reject(error);
+        }
     });
 }
 
