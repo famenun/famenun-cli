@@ -1,12 +1,13 @@
 {
     "name": "@famenun/cli",
     "version": "1.0.8",
-    "description": "Famenun CLI for developers",
+    "description": "Official Famenun CLI for Famenun Apps management",
     "main": "lib/index.js",
     "bin": {
-        "famenun": "lib/cli.js"
+        "famenun": "lib/index.js"
     },
     "scripts": {
+        "build": "tsc",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [
@@ -31,6 +32,7 @@
         "express": "^4.17.1",
         "figlet": "^1.2.4",
         "inquirer": "^7.0.0",
+        "jszip": "^3.4.0",
         "listr": "^0.14.3",
         "ncp": "^2.0.0",
         "open": "^7.0.0",
