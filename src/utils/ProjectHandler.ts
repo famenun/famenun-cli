@@ -48,9 +48,9 @@ const createFAP = (dir?: string): Promise<void> => {
         try {
             const zip = new JSZip();
             const projectPath = dir !== undefined ? path.resolve(process.cwd(), dir) : process.cwd();
-            console.log(projectPath);
+            // console.log(projectPath);
             const files: string[] = getFilesRecursively(projectPath);
-            console.log(JSON.stringify(files));
+            // console.log(JSON.stringify(files));
             for (const file of files) {
                 const filePath = file.split(projectPath)[1];
                 zip.file(filePath, fs.createReadStream(file));
