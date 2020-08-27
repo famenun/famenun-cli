@@ -55,7 +55,7 @@ const createFAP = (dir?: string): Promise<void> => {
                 const filePath = file.split(projectPath)[1];
                 zip.file(filePath, fs.createReadStream(file));
             }
-            const fapFilePath = path.resolve(projectPath, 'app.fap');
+            const fapFilePath = path.resolve(projectPath, `${projectPath.split("/")[projectPath.split("/").length -1]}.fap`);
             zip
                 .generateNodeStream({ type: 'nodebuffer', streamFiles: true }, (metadata: any) => {
                     let rawProg: number = metadata.percent || 0;
