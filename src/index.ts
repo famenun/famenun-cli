@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-import { handle } from "./utils/CommandHandler";
+import { handle } from "./command.utils";
 
 handle(process.argv);

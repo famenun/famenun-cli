@@ -4,14 +4,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>First Famenun App</title>
+    <link rel="icon" href="./icon.png">
+    <title>Test</title>
 </head>
 
 <body>
-    <h1>First Famenun App</h1>
+    <h1 style="color: #ff659a;">Toast Api Test</h1>
     <br>
-    <a href="https://developers.famenun.com" target="_blank">Docs</a>
+    <input id="message" name="message" placeholder="Message" />
+    <br>
+    <br>
+    <button onclick="showToast()">show toast</button>
+    <br>
+    <br>
+    <h1 style="color: #ff659a;">Profile Api Test</h1>
+    <br>
+    <img id="dp" style="width: 96px; height: 96px; object-fit: contain; border-radius: 50%; background: grey;" />
+    <span id="name"></span>
+    <br>
+    <br>
+    <button onclick="getProfile()">get profile</button>
+    <br>
+    <br>
+    <button onclick="createProfileShortcut()">create profile shortcut</button>
+    <br>
+    <br>
+    <button onclick="getEmail()">get email</button>
+    <br>
+    <br>
+    <button onclick="getPhoneNumber()">get phone number</button>
+    <br>
+    <br>
+    <h1 style="color: #ff659a;">Circle Api Test</h1>
+    <br>
+    <button onclick="getCircle()">get circle</button>
+    <br>
+    <br>
+    <h1 style="color: #ff659a;">App Galaxy Api Test</h1>
+    <br>
+    <button onclick="getInstalledApps()">get installed apps</button>
+    <br>
+    <button onclick="openApp()">open app</button>
+    <br>
+    <button onclick="openAppProfile()">open app profile</button>
+    <br>
+    <br>
+    <h1 style="color: #ff659a;">Chat Api Test</h1>
+    <br>
+    <button onclick="openChat()">open chat</button>
+    <br>
+    <br>
+    <h1 style="color: #ff659a;">Payment Api Test</h1>
+    <br>
+    <button onclick="makePayment()">make payment</button>
+    <br>
+    <br>
+    <h1 style="color: #ff659a;">Publish Api Test</h1>
+    <br>
+    <img id="image" style="max-width: 300px; max-height: 300px; object-fit: contain;" />
+    <br>
+    <input type="file" id="file" name="file" accept="image/*">
+    <br>
+    <button onclick="publsh()">publish</button>
+    <br>
+    <br>
+    <h1 style="color: #ff659a;">Links Api</h1>
+    <br>
+    <button onclick="openLink()">Open Link</button>
+    <br>
+    <button onclick="createDeepLink()">Create Deep Link</button>
+    <br>
+    <br>
+    <h1 style="color: #ff659a;">Notification Api</h1>
+    <br>
+    <button onclick="notify()">notify</button>
+    <br>
+    <br>
+    <h1 style="color: #ff659a;">Device Api</h1>
+    <br>
+    <button onclick="getDeviceInfo()">get device info</button>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 style="color: #006eff;">Logs</h1>
+    <div id="logs-container"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./sdk.js"></script>
+    <script>
+        var uid = "aditya";
+        var files = [];
+
+        document.getElementById("file").onchange = function(event) {
+            for (const file of event.target.files) {
+                const url = URL.createObjectURL(file);
+                console.log(url);
+                document.getElementById("image").setAttribute("src", url);
+                files.push(url);
+            }
+            console.log("files selected : " + files);
+        }
+
+        console.stdlog = console.log;
+        console.logs = [];
+        console.log = function() {
+            try {
+                console.logs.push(Array.from(arguments));
+                console.stdlog.apply(null, arguments);
+                window.logStrings = "";
+                for (const log of console.logs) {
+                    window.logStrings += `\n\n${log}`;
+                }
+                document.getElementById("logs-container").innerText = window.logStrings;
+            } catch (error) {}
+        };
+
+        const api = __famenun__.init();
+        console.log(api.debug);
+
+        try {
+            (async() => {
+                var url = new URL(window.location.href);
+                var user = url.searchParams.get("user");
+                if (user !== undefined && user !== null) {
+                    await api.toastHandler.showToast(`Show ${user}'a profile`);
+                }
+            })();
+        } catch (err) {}
+
+        function showToast() {
+            const message = document.getElementById("message").value;
+            setTimeout(async() => {
+                try {
+                    await api.toastHandler.showToast(message);
+                    console.log("Toast Shown");
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function getProfile() {
+            setTimeout(async() => {
+                try {
+                    const profile = await api.profileHandler.getProfile();
+                    console.log(`profile : ${JSON.stringify(profile)}`);
+                    uid = profile.uId;
+                    document.getElementById("dp").setAttribute("src", profile.dp);
+                    document.getElementById("name").innerText = profile.name;
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function createProfileShortcut() {
+            setTimeout(async() => {
+                try {
+                    await api.profileHandler.createShortcut({
+                        // image: files[0],
+                        image: "icon.png",
+                        name: "Test",
+                        path: "./index.html?user=usr_uid"
+                    });
+                    console.log("profile shortcut created")
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function getEmail() {
+            setTimeout(async() => {
+                try {
+                    const data = await api.profileHandler.getEmailAccessToken();
+                    console.log(`data : ${JSON.stringify(data)}`);
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function getPhoneNumber() {
+            setTimeout(async() => {
+                try {
+                    const data = await api.profileHandler.getPhoneNumberAccessToken();
+                    console.log(`data : ${JSON.stringify(data)}`);
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function getCircle() {
+            setTimeout(async() => {
+                try {
+                    const circle = await api.circleHandler.getCircle();
+                    console.log(`circle : ${JSON.stringify(circle)}`);
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function openChat() {
+            setTimeout(async() => {
+                try {
+                    await api.chatroomHandler.openChat(uid, uid);
+                    console.log(`chat opened :>`);
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function getInstalledApps() {
+            setTimeout(async() => {
+                try {
+                    const apps = await api.appGalaxyHandler.getInstalledApps();
+                    console.log(JSON.stringify(apps));
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function openApp() {
+            setTimeout(async() => {
+                try {
+                    await api.appGalaxyHandler.openApp("test_app");
+                    console.log("app opened");
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function openAppProfile() {
+            setTimeout(async() => {
+                try {
+                    await api.appGalaxyHandler.openAppProfile("test_app");
+                    console.log("app profile opened");
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function makePayment() {
+            setTimeout(async() => {
+                try {
+                    await api.paymentHandler.makePayment({
+                        referenceId: "txn_id",
+                        currency: "INR",
+                        amount: 21,
+                        to: "fPtJJsw2TDFlwfPVpB3g",
+                        note: "buy shots premium"
+                    });
+                    console.log(`payment done :>`);
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function publsh() {
+            setTimeout(async() => {
+                try {
+                    await api.publishHandler.publish(files);
+                    console.log(`broadcast done :>`);
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function openLink() {
+            setTimeout(async() => {
+                try {
+                    await api.linkHandler.openLink("https://legal.famenun.com/policies");
+                    console.log("link opened");
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function createDeepLink() {
+            setTimeout(async() => {
+                try {
+                    const link = await api.linkHandler.createDeepLink("./index.html?user=user_uid");
+                    console.log("link : " + link);
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function notify() {
+            setTimeout(async() => {
+                try {
+                    await api.notificationHandler.notify({
+                        title: "this is notification title",
+                        image: "https://thumbor.forbes.com/thumbor/fit-in/416x416/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5c76b7d331358e35dd2773a9%2F0x0.jpg%3Fbackground%3D000000%26cropX1%3D0%26cropX2%3D4401%26cropY1%3D0%26cropY2%3D4401"
+                    });
+                    console.log("notified");
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function getDeviceInfo() {
+            (async() => {
+                try {
+                    const device = await api.deviceHandler.getDeviceInfo();
+                    console.log(device);
+                } catch (error) {
+                    console.log(error);
+                }
+            })();
+        }
+    </script>
 </body>
 
 </html>
