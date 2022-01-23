@@ -7,7 +7,7 @@
         "famenun": "lib/index.js"
     },
     "scripts": {
-        "build": "tsc && rm -rf ./template/* && cp -r ../sdk/test/* ./template",
+        "build": "tsc && rm -rf ./template/* && cp -r ../famenun-sdk/test/* ./template",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [
