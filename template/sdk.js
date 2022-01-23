@@ -94,17 +94,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.runWebsite = exports.init = exports.FamenunApi = exports.Hookable = void 0;
 const ProfileHandler_1 = __webpack_require__(1);
 const ToastHandler_1 = __webpack_require__(4);
-const CircleHandler_1 = __webpack_require__(5);
-const PaymentHandler_1 = __webpack_require__(6);
-const PublishHandler_1 = __webpack_require__(7);
-const ChatroomHandler_1 = __webpack_require__(8);
-const LinkHandler_1 = __webpack_require__(9);
+const ClubsHandler_1 = __webpack_require__(5);
+const PaymentsHandler_1 = __webpack_require__(6);
+const BroadcastHandler_1 = __webpack_require__(7);
+const ChatroomsHandler_1 = __webpack_require__(8);
+const LinksHandler_1 = __webpack_require__(9);
 const AppGalaxyHandler_1 = __webpack_require__(10);
-const NotificationHandler_1 = __webpack_require__(11);
+const NotificationsHandler_1 = __webpack_require__(11);
 const RequestHandler_1 = __webpack_require__(2);
-const HookHandler_1 = __webpack_require__(12);
-const PageHandler_1 = __webpack_require__(13);
-const DeviceHandler_1 = __webpack_require__(14);
+const DeviceHandler_1 = __webpack_require__(12);
 class Hookable {
 }
 exports.Hookable = Hookable;
@@ -119,17 +117,15 @@ const init = (debug) => {
         window.__famenun_api__ = {
             debug: debug,
             profileHandler: new ProfileHandler_1.ProfileHandler(requestHandler),
-            circleHandler: new CircleHandler_1.CircleHandler(requestHandler),
-            paymentHandler: new PaymentHandler_1.PaymentHandler(requestHandler),
-            publishHandler: new PublishHandler_1.PublishHandler(requestHandler),
-            chatroomHandler: new ChatroomHandler_1.ChatroomHandler(requestHandler),
+            clubsHandler: new ClubsHandler_1.ClubsHandler(requestHandler),
+            paymentsHandler: new PaymentsHandler_1.PaymentsHandler(requestHandler),
+            broadcastHandler: new BroadcastHandler_1.BroadcastHandler(requestHandler),
+            chatroomsHandler: new ChatroomsHandler_1.ChatroomsHandler(requestHandler),
             appGalaxyHandler: new AppGalaxyHandler_1.AppGalaxyHandler(requestHandler),
             toastHandler: new ToastHandler_1.ToastHandler(requestHandler),
-            linkHandler: new LinkHandler_1.LinkHandler(requestHandler),
-            notificationHandler: new NotificationHandler_1.NotificationHandler(requestHandler),
-            deviceHandler: new DeviceHandler_1.DeviceHandler(requestHandler),
-            hookHandler: new HookHandler_1.HookHandler(requestHandler),
-            pageHandler: new PageHandler_1.PageHandler(requestHandler)
+            linksHandler: new LinksHandler_1.LinksHandler(requestHandler),
+            notificationsHandler: new NotificationsHandler_1.NotificationsHandler(requestHandler),
+            deviceHandler: new DeviceHandler_1.DeviceHandler(requestHandler)
         };
     }
     // @ts-ignore
@@ -265,7 +261,7 @@ class ProfileHandler {
                     resolve();
                 }
                 else {
-                    profileShortcut.image = yield Utility_1.resolveImage(profileShortcut.image);
+                    profileShortcut.icon = yield (0, Utility_1.resolveImage)(profileShortcut.icon);
                     (_b = this.requestHandler) === null || _b === void 0 ? void 0 : _b.request({
                         id: "request_id",
                         api: RequestHandler_1.API_CREATE_SHORTCUT,
@@ -321,7 +317,7 @@ class ProfileHandler {
         });
     }
     /**
-    * Get verified email access token
+    * Get verified mobile number access token
     */
     getPhoneNumberAccessToken() {
         return new Promise((resolve, reject) => {
@@ -373,22 +369,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RequestHandler = exports.Requestable = exports.API_HOOK = exports.API_GET_DEVICE_INFO = exports.API_NOTIFY = exports.API_CREATE_DEEP_LINK = exports.API_OPEN_LINK = exports.API_GET_DATA = exports.API_INSERT_DATA = exports.API_SHOW_TOAST = exports.API_OPEN_APP_PROFILE = exports.API_OPEN_APP = exports.API_GET_INSTALLED_APPS = exports.API_OPEN_CHAT = exports.API_PUBLISH = exports.API_MAKE_PAYMENT = exports.API_GET_CIRCLE = exports.API_GET_PHONE_NUMBER = exports.API_GET_EMAIL = exports.API_CREATE_SHORTCUT = exports.API_GET_PROFILE = void 0;
+exports.RequestHandler = exports.Requestable = exports.API_HOOK = exports.API_GET_DEVICE_INFO = exports.API_NOTIFY = exports.API_CREATE_DEEP_LINK = exports.API_OPEN_LINK = exports.API_SHOW_TOAST = exports.API_OPEN_APP = exports.API_OPEN_CHAT = exports.API_BROADCAST = exports.API_MAKE_PAYMENT = exports.API_GET_CLUB = exports.API_GET_PHONE_NUMBER = exports.API_GET_EMAIL = exports.API_CREATE_SHORTCUT = exports.API_GET_PROFILE = void 0;
 const Utility_1 = __webpack_require__(3);
 exports.API_GET_PROFILE = "API_GET_PROFILE";
 exports.API_CREATE_SHORTCUT = "API_CREATE_SHORTCUT";
 exports.API_GET_EMAIL = "API_GET_EMAIL";
 exports.API_GET_PHONE_NUMBER = "API_GET_PHONE_NUMBER";
-exports.API_GET_CIRCLE = "API_GET_CIRCLE";
+exports.API_GET_CLUB = "API_GET_CLUB";
 exports.API_MAKE_PAYMENT = "API_MAKE_PAYMENT";
-exports.API_PUBLISH = "API_PUBLISH";
+exports.API_BROADCAST = "API_BROADCAST";
 exports.API_OPEN_CHAT = "API_OPEN_CHAT";
-exports.API_GET_INSTALLED_APPS = "API_GET_INSTALLED_APPS";
 exports.API_OPEN_APP = "API_OPEN_APP";
-exports.API_OPEN_APP_PROFILE = "API_OPEN_APP_PROFILE";
 exports.API_SHOW_TOAST = "API_SHOW_TOAST";
-exports.API_INSERT_DATA = "API_INSERT_DATA";
-exports.API_GET_DATA = "API_GET_DATA";
 exports.API_OPEN_LINK = "API_OPEN_LINK";
 exports.API_CREATE_DEEP_LINK = "API_CREATE_DEEP_LINK";
 exports.API_NOTIFY = "API_NOTIFY";
@@ -398,9 +390,9 @@ const API_GET_PROFILE_RESPONSE = "API_GET_PROFILE_RESPONSE";
 const API_CREATE_SHORTCUT_RESPONSE = "API_CREATE_SHORTCUT_RESPONSE";
 const API_GET_EMAIL_RESPONSE = "API_GET_EMAIL_RESPONSE";
 const API_GET_PHONE_NUMBER_RESPONSE = "API_GET_PHONE_NUMBER_RESPONSE";
-const API_GET_CIRCLE_RESPONSE = "API_GET_CIRCLE_RESPONSE";
+const API_GET_CLUB_RESPONSE = "API_GET_CLUB_RESPONSE";
 const API_MAKE_PAYMENT_RESPONSE = "API_MAKE_PAYMENT_RESPONSE";
-const API_PUBLISH_RESPONSE = "API_PUBLISH_RESPONSE";
+const API_BROADCAST_RESPONSE = "API_BROADCAST_RESPONSE";
 const API_OPEN_CHAT_RESPONSE = "API_OPEN_CHAT_RESPONSE";
 const API_GET_INSTALLED_APPS_RESPONSE = "API_GET_INSTALLED_APPS_RESPONSE";
 const API_OPEN_APP_RESPONSE = "API_OPEN_APP_RESPONSE";
@@ -425,7 +417,7 @@ class RequestHandler {
         catch (error) { }
     }
     init(self) {
-        if (Utility_1.isLoadedInIframe()) {
+        if ((0, Utility_1.isLoadedInIframe)()) {
             console.log("loaded in iframe ;)");
             window.onmessage = (event) => {
                 (() => __awaiter(this, void 0, void 0, function* () {
@@ -440,15 +432,16 @@ class RequestHandler {
                                 case API_CREATE_SHORTCUT_RESPONSE:
                                 case API_GET_EMAIL_RESPONSE:
                                 case API_GET_PHONE_NUMBER_RESPONSE:
-                                case API_GET_CIRCLE_RESPONSE:
+                                case API_GET_CLUB_RESPONSE:
                                 case API_MAKE_PAYMENT_RESPONSE:
-                                case API_PUBLISH_RESPONSE:
+                                case API_BROADCAST_RESPONSE:
                                 case API_OPEN_CHAT_RESPONSE:
                                 case API_GET_INSTALLED_APPS_RESPONSE:
                                 case API_OPEN_APP_RESPONSE:
                                 case API_OPEN_APP_PROFILE_RESPONSE:
                                 case API_SHOW_TOAST_RESPONSE:
                                 case API_OPEN_LINK_RESPONSE:
+                                case API_CREATE_DEEP_LINK_RESPONSE:
                                 case API_NOTIFY_RESPONSE:
                                 case API_GET_DEVICE_INFO_RESPONSE:
                                     if (self.listeners.get(requestable.id) !== undefined) {
@@ -482,9 +475,9 @@ class RequestHandler {
                             case API_CREATE_SHORTCUT_RESPONSE:
                             case API_GET_EMAIL_RESPONSE:
                             case API_GET_PHONE_NUMBER_RESPONSE:
-                            case API_GET_CIRCLE_RESPONSE:
+                            case API_GET_CLUB_RESPONSE:
                             case API_MAKE_PAYMENT_RESPONSE:
-                            case API_PUBLISH_RESPONSE:
+                            case API_BROADCAST_RESPONSE:
                             case API_OPEN_CHAT_RESPONSE:
                             case API_GET_INSTALLED_APPS_RESPONSE:
                             case API_OPEN_APP_RESPONSE:
@@ -493,6 +486,7 @@ class RequestHandler {
                             case API_INSERT_DATA_RESPONSE:
                             case API_GET_DATA_RESPONSE:
                             case API_OPEN_LINK_RESPONSE:
+                            case API_CREATE_DEEP_LINK_RESPONSE:
                             case API_NOTIFY_RESPONSE:
                                 interceptable = true;
                                 if (self.listeners.get(requestable.id) !== undefined) {
@@ -515,7 +509,7 @@ class RequestHandler {
         if (onRequestCompleteListener !== undefined) {
             this.listeners.set(requestable.id, onRequestCompleteListener);
         }
-        if (Utility_1.isLoadedInIframe()) {
+        if ((0, Utility_1.isLoadedInIframe)()) {
             window.parent.postMessage(JSON.stringify(requestable), "*");
         }
         else {
@@ -597,7 +591,7 @@ const resolveImage = (img) => {
                     .then(res => res.blob())
                     .then((blob) => __awaiter(void 0, void 0, void 0, function* () {
                     let objectURL = URL.createObjectURL(blob);
-                    const base64 = yield exports.blobUrlToBase64(objectURL);
+                    const base64 = yield (0, exports.blobUrlToBase64)(objectURL);
                     resolve(base64);
                 })).catch(error => {
                     resolve(undefined);
@@ -683,16 +677,16 @@ exports.ToastHandler = ToastHandler;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CircleHandler = void 0;
+exports.ClubsHandler = void 0;
 const RequestHandler_1 = __webpack_require__(2);
-class CircleHandler {
+class ClubsHandler {
     constructor(requestHandler) {
         this.requestHandler = requestHandler;
     }
     /**
     * Show prompt to user to get his circle
     */
-    getCircle() {
+    getClub() {
         return new Promise((resolve, reject) => {
             var _a, _b;
             try {
@@ -705,7 +699,7 @@ class CircleHandler {
                 else {
                     (_b = this.requestHandler) === null || _b === void 0 ? void 0 : _b.request({
                         id: "request_id",
-                        api: RequestHandler_1.API_GET_CIRCLE
+                        api: RequestHandler_1.API_GET_CLUB
                     }, {
                         onComplete(requestable) {
                             if (!requestable.error) {
@@ -724,7 +718,7 @@ class CircleHandler {
         });
     }
 }
-exports.CircleHandler = CircleHandler;
+exports.ClubsHandler = ClubsHandler;
 
 
 /***/ }),
@@ -734,14 +728,14 @@ exports.CircleHandler = CircleHandler;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PaymentHandler = exports.Payable = exports.CURRENCY_USD = exports.CURRENCY_INR = void 0;
+exports.PaymentsHandler = exports.Payable = exports.CURRENCY_USD = exports.CURRENCY_INR = void 0;
 const RequestHandler_1 = __webpack_require__(2);
 exports.CURRENCY_INR = "INR";
 exports.CURRENCY_USD = "USD";
 class Payable {
 }
 exports.Payable = Payable;
-class PaymentHandler {
+class PaymentsHandler {
     constructor(requestHandler) {
         this.requestHandler = requestHandler;
     }
@@ -781,7 +775,7 @@ class PaymentHandler {
         });
     }
 }
-exports.PaymentHandler = PaymentHandler;
+exports.PaymentsHandler = PaymentsHandler;
 
 
 /***/ }),
@@ -800,20 +794,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PublishHandler = void 0;
+exports.BroadcastHandler = void 0;
 const RequestHandler_1 = __webpack_require__(2);
 const Utility_1 = __webpack_require__(3);
-class PublishHandler {
+class BroadcastHandler {
     constructor(requestHandler) {
         this.requestHandler = requestHandler;
     }
     /**
-    * Prompt user to publish broadcast
+    * Prompt user to broadcast
     *
-    * @param files - files to be published
+    * @param files - files to be broadcasted
     *
     */
-    publish(files) {
+    broadcast(files) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
             try {
@@ -823,12 +817,12 @@ class PublishHandler {
                 else {
                     const promises = new Array();
                     for (const file of files) {
-                        promises.push(Utility_1.blobUrlToBase64(file));
+                        promises.push((0, Utility_1.blobUrlToBase64)(file));
                     }
                     const result = yield Promise.all(promises);
                     (_b = this.requestHandler) === null || _b === void 0 ? void 0 : _b.request({
                         id: "request_id",
-                        api: RequestHandler_1.API_PUBLISH,
+                        api: RequestHandler_1.API_BROADCAST,
                         data: {
                             files: result
                         }
@@ -850,7 +844,7 @@ class PublishHandler {
         }));
     }
 }
-exports.PublishHandler = PublishHandler;
+exports.BroadcastHandler = BroadcastHandler;
 
 
 /***/ }),
@@ -860,9 +854,9 @@ exports.PublishHandler = PublishHandler;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChatroomHandler = void 0;
+exports.ChatroomsHandler = void 0;
 const RequestHandler_1 = __webpack_require__(2);
-class ChatroomHandler {
+class ChatroomsHandler {
     constructor(requestHandler) {
         this.requestHandler = requestHandler;
     }
@@ -902,7 +896,7 @@ class ChatroomHandler {
         });
     }
 }
-exports.ChatroomHandler = ChatroomHandler;
+exports.ChatroomsHandler = ChatroomsHandler;
 
 
 /***/ }),
@@ -912,9 +906,12 @@ exports.ChatroomHandler = ChatroomHandler;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LinkHandler = void 0;
+exports.LinksHandler = exports.Linkable = void 0;
 const RequestHandler_1 = __webpack_require__(2);
-class LinkHandler {
+class Linkable {
+}
+exports.Linkable = Linkable;
+class LinksHandler {
     constructor(requestHandler) {
         this.requestHandler = requestHandler;
     }
@@ -961,7 +958,7 @@ class LinkHandler {
     * @param path - the path of your app that ll be opened on click
     *
     */
-    createDeepLink(path) {
+    createDeepLink(linkable) {
         return new Promise((resolve, reject) => {
             var _a, _b;
             try {
@@ -972,9 +969,7 @@ class LinkHandler {
                     (_b = this.requestHandler) === null || _b === void 0 ? void 0 : _b.request({
                         id: "request_id",
                         api: RequestHandler_1.API_CREATE_DEEP_LINK,
-                        data: {
-                            path: path
-                        }
+                        data: linkable
                     }, {
                         onComplete(requestable) {
                             if (!requestable.error) {
@@ -993,7 +988,7 @@ class LinkHandler {
         });
     }
 }
-exports.LinkHandler = LinkHandler;
+exports.LinksHandler = LinksHandler;
 
 
 /***/ }),
@@ -1008,43 +1003,6 @@ const RequestHandler_1 = __webpack_require__(2);
 class AppGalaxyHandler {
     constructor(requestHandler) {
         this.requestHandler = requestHandler;
-    }
-    /**
-    * Get All Installed Apps of the user
-    */
-    getInstalledApps() {
-        return new Promise((resolve, reject) => {
-            var _a, _b;
-            try {
-                if ((_a = this.requestHandler) === null || _a === void 0 ? void 0 : _a.debug) {
-                    resolve([
-                        {
-                            "id": "com.example.app",
-                            "version": "1.0.0",
-                            "name": "Test App",
-                        }
-                    ]);
-                }
-                else {
-                    (_b = this.requestHandler) === null || _b === void 0 ? void 0 : _b.request({
-                        id: "request_id",
-                        api: RequestHandler_1.API_GET_INSTALLED_APPS
-                    }, {
-                        onComplete(requestable) {
-                            if (!requestable.error) {
-                                resolve(requestable.data);
-                            }
-                            else {
-                                reject(requestable.message);
-                            }
-                        }
-                    });
-                }
-            }
-            catch (error) {
-                reject(error);
-            }
-        });
     }
     /**
     * Open app
@@ -1081,41 +1039,6 @@ class AppGalaxyHandler {
             }
         });
     }
-    /**
-    * Open app profile in app galaxy
-    * @param app is the id of the app
-    */
-    openAppProfile(app) {
-        return new Promise((resolve, reject) => {
-            var _a, _b;
-            try {
-                if ((_a = this.requestHandler) === null || _a === void 0 ? void 0 : _a.debug) {
-                    resolve();
-                }
-                else {
-                    (_b = this.requestHandler) === null || _b === void 0 ? void 0 : _b.request({
-                        id: "request_id",
-                        api: RequestHandler_1.API_OPEN_APP_PROFILE,
-                        data: {
-                            app: app
-                        }
-                    }, {
-                        onComplete(requestable) {
-                            if (!requestable.error) {
-                                resolve();
-                            }
-                            else {
-                                reject(requestable.message);
-                            }
-                        }
-                    });
-                }
-            }
-            catch (error) {
-                reject(error);
-            }
-        });
-    }
 }
 exports.AppGalaxyHandler = AppGalaxyHandler;
 
@@ -1127,12 +1050,12 @@ exports.AppGalaxyHandler = AppGalaxyHandler;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NotificationHandler = exports.Notifiable = void 0;
+exports.NotificationsHandler = exports.Notifiable = void 0;
 const RequestHandler_1 = __webpack_require__(2);
 class Notifiable {
 }
 exports.Notifiable = Notifiable;
-class NotificationHandler {
+class NotificationsHandler {
     constructor(requestHandler) {
         this.requestHandler = requestHandler;
     }
@@ -1172,237 +1095,11 @@ class NotificationHandler {
         });
     }
 }
-exports.NotificationHandler = NotificationHandler;
+exports.NotificationsHandler = NotificationsHandler;
 
 
 /***/ }),
 /* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.HookHandler = exports.FView = void 0;
-class FView {
-}
-exports.FView = FView;
-class HookHandler {
-    constructor(requestHandler) {
-        this.requestHandler = requestHandler;
-    }
-    setContent(availableWidth, fView) {
-        if (fView.type !== undefined && fView.type === "image") {
-            const image = this.generateStyle(availableWidth, document.createElement("img"), fView);
-            image.style.objectFit = fView.scaling === "content" ? 'contain' : 'cover';
-            image.setAttribute("src", fView.content);
-            return image;
-        }
-        else {
-            if (fView.content !== undefined) {
-                if (Array.isArray(fView.content)) {
-                    let containerElement;
-                    if (fView.flow !== undefined && fView.flow === "over") {
-                        const div = this.generateStyle(availableWidth, document.createElement("div"), fView);
-                        div.style.display = 'grid';
-                        div.style.gridTemplateColumns = '1fr';
-                        containerElement = div;
-                    }
-                    else {
-                        const div = this.generateStyle(availableWidth, document.createElement("div"), fView);
-                        containerElement = div;
-                    }
-                    const fViews = JSON.parse(JSON.stringify(fView.content));
-                    let consumedWidth = 0;
-                    let consumedHeight = 0;
-                    let flow = "vertical";
-                    if (fView.flow != null) {
-                        if (fView.flow === "over") {
-                            flow = "over";
-                        }
-                        if (fView.flow === "horizontal") {
-                            flow = "horizontal";
-                        }
-                    }
-                    for (const fView1 of fViews) {
-                        if (flow === "horizontal") {
-                            if (fView1.width !== undefined && fView1.width !== 0) {
-                                consumedWidth = consumedWidth + fView1.width;
-                            }
-                            else {
-                                fView1.width = 100 - consumedWidth > 100 ? 100 : 100 - consumedWidth;
-                            }
-                        }
-                        if (flow === "vertical") {
-                            if (fView1.height !== undefined && fView1.height !== 0) {
-                                consumedHeight = consumedHeight + fView1.height;
-                            }
-                            else {
-                                fView1.height = 100 - consumedHeight > 100 ? 100 : 100 - consumedHeight;
-                            }
-                        }
-                        containerElement.append(this.setContent(Number(containerElement.style.width.split("px")[0]), fView1));
-                    }
-                    return containerElement;
-                }
-                else {
-                    const textElement = this.generateStyle(availableWidth, document.createElement("div"), fView);
-                    textElement.innerText = fView.content;
-                    if (fView.fontSize !== undefined && fView.fontSize != 0) {
-                        textElement.style.fontSize = `${fView.fontSize * Number(textElement.style.height.split("px")[0]) * 0.01 * 0.5}px`;
-                    }
-                    if (fView.fontColor != undefined) {
-                        textElement.style.color = fView.fontColor;
-                    }
-                    return textElement;
-                }
-            }
-        }
-    }
-    generateStyle(availableWidth, element, fView) {
-        element.style.display = 'flex';
-        element.style.gridRowStart = '1';
-        element.style.gridColumnStart = '1';
-        const style = element.style;
-        style.contain = 'content';
-        element.style.flexFlow = fView.flow === 'horizontal' ? 'row' : 'column';
-        // element.style.flex = fView.width !== undefined && fView.width !== 0 ? `${fView.width / 100}` : `1`;
-        element.style.width = fView.width !== undefined && fView.width !== 0 ? `${availableWidth * fView.width * 0.01}px` : `${availableWidth}px`;
-        if (fView.height !== undefined && fView.height !== 0) {
-            element.style.height = `${availableWidth * fView.height * 0.01}px`;
-        }
-        // margin
-        const marginLeft = fView.marginLeft !== undefined && fView.marginLeft !== 0 ? fView.marginLeft : fView.margin !== undefined ? fView.margin : 0;
-        const marginTop = fView.marginTop !== undefined && fView.marginTop !== 0 ? fView.marginTop : fView.margin !== undefined ? fView.margin : 0;
-        const marginRight = fView.marginRight !== undefined && fView.marginRight !== 0 ? fView.marginRight : fView.margin !== undefined ? fView.margin : 0;
-        const marginBottom = fView.marginBottom !== undefined && fView.marginBottom !== 0 ? fView.marginBottom : fView.margin !== undefined ? fView.margin : 0;
-        element.style.marginLeft = `${marginLeft * availableWidth * 0.01}px`;
-        element.style.marginTop = `${marginTop * availableWidth * 0.01}px`;
-        element.style.marginRight = `${marginRight * availableWidth * 0.01}px`;
-        element.style.marginBottom = `${marginBottom * availableWidth * 0.01}px`;
-        // padding
-        const paddingLeft = fView.paddingLeft !== undefined && fView.paddingLeft !== 0 ? fView.paddingLeft : fView.padding !== undefined ? fView.padding : 0;
-        const paddingTop = fView.paddingTop !== undefined && fView.paddingTop !== 0 ? fView.paddingTop : fView.padding !== undefined ? fView.padding : 0;
-        const paddingRight = fView.paddingRight !== undefined && fView.paddingRight !== 0 ? fView.paddingRight : fView.padding !== undefined ? fView.padding : 0;
-        const paddingBottom = fView.paddingBottom !== undefined && fView.paddingBottom !== 0 ? fView.paddingBottom : fView.padding !== undefined ? fView.padding : 0;
-        element.style.paddingLeft = `${paddingLeft * availableWidth * 0.01}px`;
-        element.style.marginTop = `${paddingTop * availableWidth * 0.01}px`;
-        element.style.marginRight = `${paddingRight * availableWidth * 0.01}px`;
-        element.style.marginBottom = `${paddingBottom * availableWidth * 0.01}px`;
-        // scale
-        const scaleX = fView.scaleX != 0 ? fView.scaleX : fView.scale != 0 ? fView.scale : 1;
-        const scaleY = fView.scaleY != 0 ? fView.scaleY : fView.scale != 0 ? fView.scale : 1;
-        element.style.transform = `scale(${scaleX}, ${scaleY})`;
-        // rotation
-        const rotateX = fView.rotateX != 0 ? fView.rotateX : fView.rotate;
-        const rotateY = fView.rotateY != 0 ? fView.rotateY : fView.rotate;
-        element.style.transform = `${element.style.transform} rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        const borderRadius = fView.cornerRadius !== undefined ? fView.cornerRadius : 0;
-        element.style.borderRadius = `${borderRadius * availableWidth * 0.01}px`;
-        // position
-        element.style.alignSelf = 'center';
-        if (fView.position != undefined) {
-            switch (fView.position) {
-                case "left":
-                    break;
-                case "leftTop":
-                    break;
-                case "top":
-                    break;
-                case "topRight":
-                    break;
-                case "right":
-                    break;
-                case "rightBottom":
-                    break;
-                case "bottom":
-                    break;
-                case "bottomLeft":
-                    break;
-                case "centerVertical":
-                    break;
-                case "centerHorizontal":
-                    break;
-            }
-        }
-        // position
-        element.style.alignItems = 'center';
-        element.style.justifyContent = 'center';
-        element.style.textAlign = 'center';
-        if (fView.gravity != undefined) {
-            switch (fView.gravity) {
-                case "left":
-                    break;
-                case "leftTop":
-                    break;
-                case "top":
-                    break;
-                case "topRight":
-                    break;
-                case "right":
-                    break;
-                case "rightBottom":
-                    break;
-                case "bottom":
-                    break;
-                case "bottomLeft":
-                    break;
-                case "centerVertical":
-                    break;
-                case "centerHorizontal":
-                    break;
-            }
-        }
-        return element;
-    }
-    fViewToHtml(rootView, fView) {
-        const element = this.setContent(rootView.offsetWidth, fView);
-        if (Number(element.style.height.split("px")[0]) > rootView.offsetWidth) {
-            element.style.height = `${rootView.offsetWidth}px`;
-        }
-        return element;
-    }
-}
-exports.HookHandler = HookHandler;
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.PageHandler = void 0;
-class PageHandler {
-    constructor(requestHandler) {
-        this.requestHandler = requestHandler;
-    }
-    run(id) {
-        return new Promise((resolve, reject) => {
-            try {
-                console.log(`run : ${id}`);
-                // get the default/specific property of the page
-                // add famenun app iframe
-                var iframe = document.createElement("iframe");
-                iframe.setAttribute("id", "page");
-                iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms");
-                iframe.setAttribute("frameborder", "0");
-                iframe.setAttribute("hspace", "0");
-                iframe.setAttribute("vspace", "0");
-                iframe.setAttribute("src", "https://famenun.com/run/com.famenun.shotme");
-                document.body.append(iframe);
-            }
-            catch (error) {
-                reject(error);
-            }
-        });
-    }
-}
-exports.PageHandler = PageHandler;
-
-
-/***/ }),
-/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

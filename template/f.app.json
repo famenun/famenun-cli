@@ -13,7 +13,6 @@
     "color": "#ff659a",
     /*for hooking data in the famenun system like data in the feeds*/
     "hooks": {
-        "feeds": "./hooks/feeds.js",
-        "notifications": "./hooks/notifications.js"
+        "feeds": "./hooks/feeds.js"
     }
 }

@@ -5,87 +5,196 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./icon.png">
-    <title>Test</title>
+    <title>Awesome App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 
 <body>
-    <h1 style="color: #ff659a;">Toast Api Test</h1>
-    <br>
-    <input id="message" name="message" placeholder="Message" />
-    <br>
-    <br>
-    <button onclick="showToast()">show toast</button>
-    <br>
-    <br>
-    <h1 style="color: #ff659a;">Profile Api Test</h1>
-    <br>
-    <img id="dp" style="width: 96px; height: 96px; object-fit: contain; border-radius: 50%; background: grey;" />
-    <span id="name"></span>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./icon.png" alt="" width="24" height="24" class="d-inline-block align-text-top" style="border-radius: 50%;"> Awesome App
+            </a>
+        </div>
+    </nav>
     <br>
     <br>
-    <button onclick="getProfile()">get profile</button>
-    <br>
-    <br>
-    <button onclick="createProfileShortcut()">create profile shortcut</button>
-    <br>
-    <br>
-    <button onclick="getEmail()">get email</button>
-    <br>
-    <br>
-    <button onclick="getPhoneNumber()">get phone number</button>
-    <br>
-    <br>
-    <h1 style="color: #ff659a;">Circle Api Test</h1>
-    <br>
-    <button onclick="getCircle()">get circle</button>
-    <br>
-    <br>
-    <h1 style="color: #ff659a;">App Galaxy Api Test</h1>
-    <br>
-    <button onclick="getInstalledApps()">get installed apps</button>
-    <br>
-    <button onclick="openApp()">open app</button>
-    <br>
-    <button onclick="openAppProfile()">open app profile</button>
-    <br>
-    <br>
-    <h1 style="color: #ff659a;">Chat Api Test</h1>
-    <br>
-    <button onclick="openChat()">open chat</button>
-    <br>
-    <br>
-    <h1 style="color: #ff659a;">Payment Api Test</h1>
-    <br>
-    <button onclick="makePayment()">make payment</button>
-    <br>
-    <br>
-    <h1 style="color: #ff659a;">Publish Api Test</h1>
-    <br>
-    <img id="image" style="max-width: 300px; max-height: 300px; object-fit: contain;" />
-    <br>
-    <input type="file" id="file" name="file" accept="image/*">
-    <br>
-    <button onclick="publsh()">publish</button>
-    <br>
-    <br>
-    <h1 style="color: #ff659a;">Links Api</h1>
-    <br>
-    <button onclick="openLink()">Open Link</button>
-    <br>
-    <button onclick="createDeepLink()">Create Deep Link</button>
-    <br>
-    <br>
-    <h1 style="color: #ff659a;">Notification Api</h1>
-    <br>
-    <button onclick="notify()">notify</button>
-    <br>
-    <br>
-    <h1 style="color: #ff659a;">Device Api</h1>
-    <br>
-    <button onclick="getDeviceInfo()">get device info</button>
-    <br>
-    <br>
-    <br>
+    <div style="display: flex; flex-flow: column; align-items: center;">
+        <div class="accordion" id="accordionExample" style="max-width: 600px; width: 100%;">
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        AppGalaxyHandler
+                </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6>AppGalaxyHandler.openApp</h6>
+                        <button type="button" class="btn btn-primary" onclick="openApp()">Open App</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        BroadcastHandler
+                </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6>BroadcastHandler.broadcast</h6>
+                        <img id="image" style="max-width: 300px; max-height: 300px; object-fit: contain;" />
+                        <br>
+                        <input type="file" id="file" name="file" accept="image/*">
+                        <br>
+                        <button type="button" class="btn btn-primary" onclick="broadcast()">Broadcast</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        ChatroomsHandler
+                </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6>ChatroomsHandler.openChat</h6>
+                        <button type="button" class="btn btn-primary" onclick="openChat()">Open Chat</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        ClubsHandler
+                </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6>ClubsHandler.getClub</h6>
+                        <button type="button" class="btn btn-primary" onclick="getClub()">Get Club</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        DeviceHandler
+                </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6>DeviceHandler.getDeviceInfo</h6>
+                        <button type="button" class="btn btn-primary" onclick="getDeviceInfo()">Get Device Info</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        LinksHandler
+                </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6>LinksHandler.openLink</h6>
+                        <button type="button" class="btn btn-primary" onclick="openLink()">Open Link</button>
+                        <br>
+                        <br>
+                        <br>
+                        <h6>LinksHandler.createDeepLink</h6>
+                        <button type="button" class="btn btn-primary" onclick="createDeepLink()">Create Deep Link</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSeven">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                        NotificationsHandler
+                </button>
+                </h2>
+                <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6>NotificationsHandler.notify</h6>
+                        <button type="button" class="btn btn-primary" onclick="notify()">Notify</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingEight">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                        PaymentsHandler
+                </button>
+                </h2>
+                <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6>PaymentsHandler.makePayment</h6>
+                        <button type="button" class="btn btn-primary" onclick="makePayment()">Make Payment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingNine">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                        ProfileHandler
+                </button>
+                </h2>
+                <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6>ProfileHandler.getProfile</h6>
+                        <img id="dp" style="width: 96px; height: 96px; object-fit: contain; border-radius: 50%; background: grey;" />
+                        <span id="name"></span>
+                        <br>
+                        <br>
+                        <button type="button" class="btn btn-primary" onclick="getProfile()">Get Profile</button>
+                        <br>
+                        <br>
+                        <br>
+                        <h6>ProfileHandler.createShortcut</h6>
+                        <button type="button" class="btn btn-primary" onclick="createProfileShortcut()">Create Profile Shortcut</button>
+                        <br>
+                        <br>
+                        <br>
+                        <h6>ProfileHandler.getEmailAccessToken</h6>
+                        <button type="button" class="btn btn-primary" onclick="getEmail()">Get Email</button>
+                        <br>
+                        <br>
+                        <br>
+                        <h6>ProfileHandler.getPhoneNumberAccessToken</h6>
+                        <button type="button" class="btn btn-primary" onclick="getPhoneNumber()">Get Phone Number</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTen">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                        ToastHandler
+                </button>
+                </h2>
+                <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h6>ToastHandler.showToast</h6>
+                        <input type="text" class="form-control" id="message" name="message" placeholder="Message" />
+                        <br>
+                        <button type="button" class="btn btn-primary" onclick="showToast()">Show Toast</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <br>
     <br>
     <h1 style="color: #006eff;">Logs</h1>
@@ -134,12 +243,110 @@
             })();
         } catch (err) {}
 
-        function showToast() {
-            const message = document.getElementById("message").value;
+        function openApp() {
             setTimeout(async() => {
                 try {
-                    await api.toastHandler.showToast(message);
-                    console.log("Toast Shown");
+                    await api.appGalaxyHandler.openApp("test_app");
+                    console.log("app opened");
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function broadcast() {
+            setTimeout(async() => {
+                try {
+                    await api.broadcastHandler.broadcast(files);
+                    console.log(`broadcast done :>`);
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function openChat() {
+            setTimeout(async() => {
+                try {
+                    await api.chatroomsHandler.openChat(uid, uid);
+                    console.log(`chat opened :>`);
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function getClub() {
+            setTimeout(async() => {
+                try {
+                    const circle = await api.clubsHandler.getClub();
+                    console.log(`circle : ${JSON.stringify(circle)}`);
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function getDeviceInfo() {
+            (async() => {
+                try {
+                    const device = await api.deviceHandler.getDeviceInfo();
+                    console.log(device);
+                } catch (error) {
+                    console.log(error);
+                }
+            })();
+        }
+
+        function openLink() {
+            setTimeout(async() => {
+                try {
+                    await api.linksHandler.openLink("https://legal.famenun.com/policies");
+                    console.log("link opened");
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function createDeepLink() {
+            setTimeout(async() => {
+                try {
+                    const link = await api.linksHandler.createDeepLink({
+                        path: "./index.html?user=user_uid"
+                    });
+                    console.log("link : " + link);
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function notify() {
+            setTimeout(async() => {
+                try {
+                    await api.notificationsHandler.notify({
+                        title: "this is notification title",
+                        image: "https://thumbor.forbes.com/thumbor/fit-in/416x416/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5c76b7d331358e35dd2773a9%2F0x0.jpg%3Fbackground%3D000000%26cropX1%3D0%26cropX2%3D4401%26cropY1%3D0%26cropY2%3D4401"
+                    });
+                    console.log("notified");
+                } catch (error) {
+                    console.log(error);
+                }
+            }, 0);
+        }
+
+        function makePayment() {
+            setTimeout(async() => {
+                try {
+                    await api.paymentsHandler.makePayment({
+                        referenceId: "txn_id",
+                        currency: "INR",
+                        amount: 21,
+                        to: "fPtJJsw2TDFlwfPVpB3g",
+                        note: "buy shots premium"
+                    });
+                    console.log(`payment done :>`);
                 } catch (error) {
                     console.log(error);
                 }
@@ -198,136 +405,19 @@
             }, 0);
         }
 
-        function getCircle() {
+        function showToast() {
+            const message = document.getElementById("message").value;
             setTimeout(async() => {
                 try {
-                    const circle = await api.circleHandler.getCircle();
-                    console.log(`circle : ${JSON.stringify(circle)}`);
+                    await api.toastHandler.showToast(message);
+                    console.log("Toast Shown");
                 } catch (error) {
                     console.log(error);
                 }
             }, 0);
-        }
-
-        function openChat() {
-            setTimeout(async() => {
-                try {
-                    await api.chatroomHandler.openChat(uid, uid);
-                    console.log(`chat opened :>`);
-                } catch (error) {
-                    console.log(error);
-                }
-            }, 0);
-        }
-
-        function getInstalledApps() {
-            setTimeout(async() => {
-                try {
-                    const apps = await api.appGalaxyHandler.getInstalledApps();
-                    console.log(JSON.stringify(apps));
-                } catch (error) {
-                    console.log(error);
-                }
-            }, 0);
-        }
-
-        function openApp() {
-            setTimeout(async() => {
-                try {
-                    await api.appGalaxyHandler.openApp("test_app");
-                    console.log("app opened");
-                } catch (error) {
-                    console.log(error);
-                }
-            }, 0);
-        }
-
-        function openAppProfile() {
-            setTimeout(async() => {
-                try {
-                    await api.appGalaxyHandler.openAppProfile("test_app");
-                    console.log("app profile opened");
-                } catch (error) {
-                    console.log(error);
-                }
-            }, 0);
-        }
-
-        function makePayment() {
-            setTimeout(async() => {
-                try {
-                    await api.paymentHandler.makePayment({
-                        referenceId: "txn_id",
-                        currency: "INR",
-                        amount: 21,
-                        to: "fPtJJsw2TDFlwfPVpB3g",
-                        note: "buy shots premium"
-                    });
-                    console.log(`payment done :>`);
-                } catch (error) {
-                    console.log(error);
-                }
-            }, 0);
-        }
-
-        function publsh() {
-            setTimeout(async() => {
-                try {
-                    await api.publishHandler.publish(files);
-                    console.log(`broadcast done :>`);
-                } catch (error) {
-                    console.log(error);
-                }
-            }, 0);
-        }
-
-        function openLink() {
-            setTimeout(async() => {
-                try {
-                    await api.linkHandler.openLink("https://legal.famenun.com/policies");
-                    console.log("link opened");
-                } catch (error) {
-                    console.log(error);
-                }
-            }, 0);
-        }
-
-        function createDeepLink() {
-            setTimeout(async() => {
-                try {
-                    const link = await api.linkHandler.createDeepLink("./index.html?user=user_uid");
-                    console.log("link : " + link);
-                } catch (error) {
-                    console.log(error);
-                }
-            }, 0);
-        }
-
-        function notify() {
-            setTimeout(async() => {
-                try {
-                    await api.notificationHandler.notify({
-                        title: "this is notification title",
-                        image: "https://thumbor.forbes.com/thumbor/fit-in/416x416/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5c76b7d331358e35dd2773a9%2F0x0.jpg%3Fbackground%3D000000%26cropX1%3D0%26cropX2%3D4401%26cropY1%3D0%26cropY2%3D4401"
-                    });
-                    console.log("notified");
-                } catch (error) {
-                    console.log(error);
-                }
-            }, 0);
-        }
-
-        function getDeviceInfo() {
-            (async() => {
-                try {
-                    const device = await api.deviceHandler.getDeviceInfo();
-                    console.log(device);
-                } catch (error) {
-                    console.log(error);
-                }
-            })();
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
